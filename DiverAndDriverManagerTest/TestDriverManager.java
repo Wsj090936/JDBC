@@ -1,5 +1,5 @@
 package DiverAndDriverManagerTest;
-
+//连接数据库
 
 import java.io.InputStream;
 import java.sql.Connection;
