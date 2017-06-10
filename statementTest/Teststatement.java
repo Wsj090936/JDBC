@@ -18,7 +18,7 @@ public class Teststatement {
 	//		1、获取数据库连接
 			con = getConnection();
 	//		2、生成插入的sql语句
-			String sql = "INSERT INTO animal (id,name,age) VALUES (1,'cat',3)";
+			String sql = "INSERT INTO animal (id,name,age) VALUES (2,'cat',4)";
 	//		3、获取操作SQL语句的Statement对象
 			state = con.createStatement();
 	//		4、调用Statement对象的executeUpdate(String  aql)方法来执行sql语句
