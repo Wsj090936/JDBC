@@ -1,6 +1,5 @@
 package DAO;
 
-import static org.junit.Assert.*;
 
 import org.junit.Test;
 
@@ -15,7 +14,7 @@ public class TestDAO {
 
 	@Test
 	public void testGet() {
-        String sql = "SELECT Flow_ID FlowID,Type,ID_Card IDcard FROM examstudent WHERE Flow_ID=?";
+        String sql = "SELECT Flow_ID flowID,type,ID_Card iDcard FROM examstudent WHERE Flow_ID=?";
         System.out.println(dao.get(Student.class, sql, 10002));
 	}
 

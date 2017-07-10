@@ -70,4 +70,5 @@ public class Student {
 		return "Student [FlowID=" + FlowID + ", Type=" + Type + ", IDcard=" + IDcard + ", Examcard=" + Examcard
 				+ ", StudentName=" + StudentName + ", Location=" + Location + ", Grade=" + Grade + "]";
 	}
+	
 }

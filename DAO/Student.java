@@ -1,73 +1,90 @@
 package DAO;
 //学生类  用于存储学生信息
 public class Student {
-	public int FlowID;//流水号
-	public String Type;//考试类型
-	public String IDcard;//身份证号
-	public String Examcard;//准考证号码
-	public String StudentName;//学生姓名
-	public String Location;//区域
-	public int Grade;//成绩
+	public int flowID;//流水号
+	public String type;//考试类型
+	public String iDcard;//身份证号
+	public String examcard;//准考证号码
+	public String studentName;//学生姓名
+	public String location;//区域
+	public int grade;//成绩
 	
 	public int getFlowID() {
-		return FlowID;
+		return flowID;
 	}
+
 	public void setFlowID(int flowID) {
-		FlowID = flowID;
+		this.flowID = flowID;
 	}
+
 	public String getType() {
-		return Type;
+		return type;
 	}
+
 	public void setType(String type) {
-		Type = type;
+		this.type = type;
 	}
-	public String getIDcard() {
-		return IDcard;
+
+	public String getiDcard() {
+		return iDcard;
 	}
-	public void setIDcard(String iDcard) {
-		IDcard = iDcard;
+
+	public void setiDcard(String iDcard) {
+		this.iDcard = iDcard;
 	}
+
 	public String getExamcard() {
-		return Examcard;
+		return examcard;
 	}
+
 	public void setExamcard(String examcard) {
-		Examcard = examcard;
+		this.examcard = examcard;
 	}
+
 	public String getStudentName() {
-		return StudentName;
+		return studentName;
 	}
+
 	public void setStudentName(String studentName) {
-		StudentName = studentName;
+		this.studentName = studentName;
 	}
+
 	public String getLocation() {
-		return Location;
+		return location;
 	}
+
 	public void setLocation(String location) {
-		Location = location;
+		this.location = location;
 	}
+
 	public int getGrade() {
-		return Grade;
+		return grade;
 	}
+
 	public void setGrade(int grade) {
-		Grade = grade;
+		this.grade = grade;
 	}
+
 	public Student() {
 		super();
 	}
 	public Student(int flowID, String type, String iDcard, String examcard, String studentName, String location,
 			int grade) {
 		super();
-		FlowID = flowID;
-		Type = type;
-		IDcard = iDcard;
-		Examcard = examcard;
-		StudentName = studentName;
-		Location = location;
-		Grade = grade;
+		this.flowID = flowID;
+		this.type = type;
+		this.iDcard = iDcard;
+		this.examcard = examcard;
+		this.studentName = studentName;
+		this.location = location;
+		this.grade = grade;
 	}
+
 	@Override
 	public String toString() {
-		return "Student [FlowID=" + FlowID + ", Type=" + Type + ", IDcard=" + IDcard + ", Examcard=" + Examcard
-				+ ", StudentName=" + StudentName + ", Location=" + Location + ", Grade=" + Grade + "]";
+		return "Student [flowID=" + flowID + ", type=" + type + ", iDcard=" + iDcard + ", examcard=" + examcard
+				+ ", studentName=" + studentName + ", location=" + location + ", Grade=" + grade + "]";
 	}
+
+
 }
