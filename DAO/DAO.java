@@ -7,13 +7,20 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Properties;
 
 import org.apache.commons.beanutils.BeanUtils;
 
 public class DAO {
+	/**
+	 * 数据库的更新
+	 * @param sql
+	 * @param args
+	 */
     public void updata(String sql,Object ... args){//数据库的更新操作，可实现增、删、改的操作
     	Connection con = null;
     	PreparedStatement ps = null;
@@ -31,7 +38,14 @@ public class DAO {
 			JDBCTools.release(con, ps);//释放数据库连接
 		}
     }
-    public <T> T get(Class<T> clazz,String sql,Object ... args){//数据库的查询操作
+    /**
+     * 数据库的单个查询操作
+     * @param clazz
+     * @param sql
+     * @param args
+     * @return
+     */
+    public <T> T getForOne(Class<T> clazz,String sql,Object ... args){//数据库的查询操作
     	T entity = null;
     	Connection con = null;
     	PreparedStatement ps = null;
@@ -70,6 +84,65 @@ public class DAO {
     	
     	return entity;
     }
+    /**
+     * 数据库的多个查询返回结果集合的操作
+     * @param clazz
+     * @param sql
+     * @param args
+     * @return
+     */
+    public <T> List<T> getForList(Class<T> clazz,String sql,Object ... args){
+    	List<T> list =  new ArrayList<>();
+    	Connection con = null;
+    	PreparedStatement ps = null;
+    	ResultSet rs = null;
+    	try {
+			con = getConnection();
+			ps = con.prepareStatement(sql);
+			for(int i = 0;i < args.length;i++){
+				ps.setObject(i + 1, args[i]);
+			}
+			rs = ps.executeQuery();//得到结果集
+			List<Map<String,Object>> valueList = new ArrayList<>();//用于存放多条记录的List集合
+			ResultSetMetaData rsmd = rs.getMetaData();
+			Map<String,Object> map = null;//存放一条记录的Map集合
+			while(rs.next()){//处理结果集
+				map = new HashMap<String,Object>();
+				for(int i = 0;i < rsmd.getColumnCount();i++){
+					String columLabel = rsmd.getColumnLabel(i + 1);
+					Object value = rs.getObject(i + 1);
+					//将一条记录存入mao集合中
+					map.put(columLabel, value);
+				}
+				valueList.add(map);
+			}
+			//判断valueList是否为空  若不为空，则遍历valueList集合，得到一个个Map对象，将其转为Class参数对应的对象
+			T bean = null;
+			if(valueList.size() > 0){
+				for(Map<String,Object> each : valueList){
+					for(Map.Entry<String, Object> e : each.entrySet()){
+						String fieldname = e.getKey();
+						Object fieldvalue = e.getValue();
+						//为对应的Java类属性赋值
+						bean =  clazz.newInstance();
+						BeanUtils.setProperty(bean, fieldname, fieldvalue);
+					}
+					//将T对象放入list中
+					list.add(bean);
+				}
+			}
+		} catch (Exception e) {
+            e.printStackTrace();
+		}finally{
+			release(rs, con, ps);
+		}
+    	return list;
+    }
+    /**
+     * 数据库的连接操作
+     * @return
+     * @throws Exception
+     */
 	public Connection getConnection() throws Exception{//连接数据库
 		String driverClass = null;
 		String url = null;
@@ -88,6 +161,11 @@ public class DAO {
 		Class.forName(driverClass);
 		return DriverManager.getConnection(url, user, password);
 	} 
+	/**
+	 * 数据库的连接释放操作
+	 * @param con
+	 * @param state
+	 */
 	public void release(Connection con , Statement state){//关闭数据库连接
 		if(state != null){
 			try {
