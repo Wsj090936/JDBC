@@ -1,4 +1,4 @@
-package DAO;
+package TestTransaction;
 
 import java.io.InputStream;
 import java.sql.Connection;
@@ -21,12 +21,10 @@ public class DAO {
 	 * @param sql
 	 * @param args
 	 */
-    public void updata(String sql,Object ... args){//数据库的更新操作，可实现增、删、改的操作
-    	Connection con = null;
+    public void update(Connection con,String sql,Object ... args){//数据库的更新操作，可实现增、删、改的操作
     	PreparedStatement ps = null;
     	
     	try {
-			con = getConnection();//获取数据库连接
 			ps = con.prepareStatement(sql);
 			for(int i = 0;i<args.length;i++){//填充占位符
 				ps.setObject(i + 1, args[i]);
@@ -35,7 +33,7 @@ public class DAO {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}finally{
-			JDBCTools.release(con, ps);//释放数据库连接
+			JDBCTools.release(null, null, ps);
 		}
     }
     /**
@@ -44,12 +42,10 @@ public class DAO {
      * @param args
      * @return
      */
-    public <E> E getvalues(String sql,Object ... args){
-    	Connection con = null;
+    public <E> E getvalues(Connection con,String sql,Object ... args){
     	PreparedStatement ps = null;
     	ResultSet rs = null;//所得结果集只为一行一列
     	try {
-			con = JDBCTools.getConnection();
 			ps = con.prepareStatement(sql);
 			for(int i = 0;i < args.length;i++){
 				ps.setObject(i+1,args[i]);
@@ -61,7 +57,7 @@ public class DAO {
 		} catch (Exception e) {
             e.printStackTrace();
 		}finally{
-			JDBCTools.release(rs, con, ps);
+			JDBCTools.release(rs, null, ps);
 		}
     	return null;
     }
@@ -72,14 +68,12 @@ public class DAO {
      * @param args
      * @return
      */
-    public <T> T getForOne(Class<T> clazz,String sql,Object ... args){//数据库的查询操作
+    public <T> T getForOne(Connection con,Class<T> clazz,String sql,Object ... args){//数据库的查询操作
     	T entity = null;
-    	Connection con = null;
     	PreparedStatement ps = null;
     	ResultSet rs = null;
     	
     	try {
-			con = getConnection();
 			ps = con.prepareStatement(sql);
 			for(int i = 0;i < args.length;i++){//填充占位符
 				ps.setObject(i + 1,args[i]);
@@ -107,6 +101,8 @@ public class DAO {
 			}
 		} catch (Exception e) {
             e.printStackTrace();
+		}finally{
+			JDBCTools.release(rs, null, ps);
 		}
     	
     	return entity;
@@ -118,13 +114,11 @@ public class DAO {
      * @param args
      * @return
      */
-    public <T> List<T> getForList(Class<T> clazz,String sql,Object ... args){
+    public <T> List<T> getForList(Connection con,Class<T> clazz,String sql,Object ... args){
     	List<T> list =  new ArrayList<>();
-    	Connection con = null;
     	PreparedStatement ps = null;
     	ResultSet rs = null;
     	try {
-			con = getConnection();
 			ps = con.prepareStatement(sql);
 			for(int i = 0;i < args.length;i++){
 				ps.setObject(i + 1, args[i]);
@@ -161,7 +155,7 @@ public class DAO {
 		} catch (Exception e) {
             e.printStackTrace();
 		}finally{
-			release(rs, con, ps);
+			JDBCTools.release(rs, null, ps);
 		}
     	return list;
     }
