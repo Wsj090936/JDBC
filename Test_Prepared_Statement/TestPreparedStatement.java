@@ -1,4 +1,4 @@
-package TestPreparedStatement;
+package Test_Prepared_Statement;
 
 import java.io.InputStream;
 import java.sql.Connection;

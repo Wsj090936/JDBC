@@ -1,4 +1,4 @@
-package TestPreparedStatement;
+package Test_Prepared_Statement;
 //学生类  用于存储学生信息
 public class Student {
 	public int FlowID;//流水号

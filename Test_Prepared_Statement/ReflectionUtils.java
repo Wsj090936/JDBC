@@ -1,4 +1,4 @@
-package TestPreparedStatement;
+package Test_Prepared_Statement;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
