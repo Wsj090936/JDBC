@@ -1,4 +1,4 @@
-package TestTransaction;
+package TestBatch;
 //JDBC工具类  包含数据库的连接，更新，关闭等功能
 import java.io.InputStream;
 import java.sql.Connection;

@@ -70,8 +70,7 @@ public class TestTransaction {//事务的多个操作
     	PreparedStatement ps = null;
     	ResultSet rs = null;//所得结果集只为一行一列
     	try {
-			con = JDBCTools.getConnection();
-			con.setTransactionIsolation(con.TRANSACTION_READ_COMMITTED);//设置隔离级别为读已提交的
+			con.setTransactionIsolation(con.TRANSACTION_READ_COMMITTED);//设置隔离级别为读已提交的\
 			ps = con.prepareStatement(sql);
 			for(int i = 0;i < args.length;i++){
 				ps.setObject(i+1,args[i]);
