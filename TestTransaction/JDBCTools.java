@@ -19,7 +19,7 @@ public class JDBCTools {
 		
 		Properties properties = new Properties();
 		
-		InputStream in = Review.class.getClassLoader().getResourceAsStream("jdbc.properties");
+		InputStream in = JDBCTools.class.getClassLoader().getResourceAsStream("jdbc.properties");
 		properties.load(in);
 		
 		driverClass = properties.getProperty("driver");
